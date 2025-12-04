@@ -1,0 +1,15 @@
+.home {
+  padding: 20px 70px;
+  background-color: #f6f6f6;
+  min-height: 100vh;
+}
+@media (max-width: 600px) {
+  .home {
+    padding: 10px;
+  }
+}
+@media (min-width: 601px) and (max-width: 1024px) {
+  .home {
+    padding: 20px;
+  }
+}

@@ -1,0 +1,107 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  height: 50px;
+  /* themed("border") */
+  border-bottom: 1px solid #ccc;
+  position: sticky;
+  top: 0;
+  /* themed("bg") */
+  background-color: white;
+  /* themed("textColor") */
+  color: black;
+  z-index: 999;
+}
+
+/* ------------------------------------
+   .navbar .left
+   ------------------------------------ */
+.navbar .left {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.navbar .left span {
+  font-weight: bold;
+  font-size: 20px;
+  /* themed("logo") */
+  color: rebeccapurple;
+}
+
+/* ------------------------------------
+   .navbar .left .search
+   ------------------------------------ */
+.navbar .left .search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* themed("border") */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.navbar .left .search input {
+  border: none;
+  width: 500px;
+  background-color: transparent;
+  /* themed("textColor") */
+  color: black;
+}
+
+/* Media Query: @include mobile (Input disembunyikan) */
+@media (max-width: 600px) {
+  .navbar .left .search input {
+    display: none;
+  }
+}
+
+/* Media Query: @include tablet (Input diperkecil) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .navbar .left .search input {
+    width: 200px;
+  }
+}
+
+/* ------------------------------------
+   .navbar .right
+   ------------------------------------ */
+.navbar .right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Media Query: @include mobile (Right disembunyikan) */
+@media (max-width: 600px) {
+  .navbar .right {
+    display: none;
+  }
+}
+
+/* ------------------------------------
+   .navbar .right .user
+   ------------------------------------ */
+.navbar .right .user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+/* Media Query: @include tablet (User disembunyikan) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .navbar .right .user {
+    display: none;
+  }
+}
+
+.navbar .right .user img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}

@@ -1,0 +1,67 @@
+.comments img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.comments .write {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 20px 0px;
+}
+
+.comments .write input {
+  flex: 5;
+  padding: 10px;
+  /* themed("border") diganti dengan nilai standar */
+  border: 1px solid lightgray;
+  background-color: transparent;
+  /* themed("textColor") diganti dengan nilai standar */
+  color: black;
+}
+
+.comments .write button {
+  border: none;
+  background-color: #5271ff;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+/* ------------------------------------
+   .comment (Setiap Komentar)
+   ------------------------------------ */
+.comments .comment {
+  margin: 30px 0px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.comments .comment .info {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: flex-start;
+}
+
+.comments .comment .info span {
+  font-weight: 500;
+}
+
+.comments .comment .info p {
+  /* themed("textColorSoft") diganti dengan nilai standar */
+  color: gray;
+}
+
+.comments .comment .date {
+  flex: 1;
+  align-self: center;
+  color: gray;
+  font-size: 12px;
+}

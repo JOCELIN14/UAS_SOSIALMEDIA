@@ -1,0 +1,106 @@
+.post {
+  -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  border-radius: 20px;
+  /* themed("bg") */
+  background-color: white;
+  /* themed("textColor") */
+  color: black;
+}
+
+/* ------------------------------------
+   .post .container
+   ------------------------------------ */
+.post .container {
+  padding: 20px;
+}
+
+/* ------------------------------------
+   .post .container .user
+   ------------------------------------ */
+.post .container .user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* ------------------------------------
+   .post .container .user .userInfo
+   ------------------------------------ */
+.post .container .user .userInfo {
+  display: flex;
+  gap: 20px;
+}
+
+.post .container .user .userInfo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ------------------------------------
+   .post .container .user .userInfo .details
+   ------------------------------------ */
+.post .container .user .userInfo .details {
+  display: flex;
+  flex-direction: column;
+}
+
+.post .container .user .userInfo .details .name {
+  font-weight: 500;
+}
+
+.post .container .user .userInfo .details .date {
+  font-size: 12px;
+}
+
+/* ------------------------------------
+   .post .container .user button
+   ------------------------------------ */
+.post .container .user button {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  border: none;
+  background-color: #f0544f;
+  padding: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+/* ------------------------------------
+   .post .container .content
+   ------------------------------------ */
+.post .container .content {
+  margin: 20px 0px;
+}
+
+.post .container .content img {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  margin-top: 20px;
+}
+
+/* ------------------------------------
+   .post .container .info
+   ------------------------------------ */
+.post .container .info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ------------------------------------
+   .post .container .info .item
+   ------------------------------------ */
+.post .container .info .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
