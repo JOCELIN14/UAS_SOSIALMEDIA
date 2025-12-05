@@ -2,6 +2,15 @@ import { db } from "../db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs"; // Pastikan import ini ada!
 
+// --- FUNGSI BARU UNTUK SUGGESTIONS ---
+export const getUsers = (req, res) => {
+  const q = "SELECT id, name, profilePic FROM users LIMIT 5";
+  db.query(q, (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.json(data);
+  });
+};
+
 export const getUser = (req, res) => {
   const userId = req.params.userId;
   const q = "SELECT * FROM users WHERE id=?";
@@ -27,17 +36,17 @@ export const updateUser = (req, res) => {
     let values = [];
 
     if (req.body.password) {
-        // JIKA GANTI PASSWORD: Kita enkripsi dulu password barunya
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(req.body.password, salt);
+      // JIKA GANTI PASSWORD: Kita enkripsi dulu password barunya
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(req.body.password, salt);
 
-        // Update Nama, Kota, Website, DAN Password
-        q = "UPDATE users SET `name`=?,`city`=?,`website`=?,`password`=? WHERE id=?";
-        values = [req.body.name, req.body.city, req.body.website, hash, userInfo.id];
+      // Update Nama, Kota, Website, DAN Password
+      q = "UPDATE users SET `name`=?,`city`=?,`website`=?,`password`=? WHERE id=?";
+      values = [req.body.name, req.body.city, req.body.website, hash, userInfo.id];
     } else {
-        // JIKA TIDAK GANTI PASSWORD: Update data diri saja
-        q = "UPDATE users SET `name`=?,`city`=?,`website`=? WHERE id=?";
-        values = [req.body.name, req.body.city, req.body.website, userInfo.id];
+      // JIKA TIDAK GANTI PASSWORD: Update data diri saja
+      q = "UPDATE users SET `name`=?,`city`=?,`website`=? WHERE id=?";
+      values = [req.body.name, req.body.city, req.body.website, userInfo.id];
     }
 
     db.query(q, values, (err, data) => {
@@ -45,6 +54,17 @@ export const updateUser = (req, res) => {
       if (data.affectedRows > 0) return res.json("Updated!");
       return res.status(403).json("You can update only your account!");
     });
+  });
+};
+
+export const searchUsers = (req, res) => {
+  const query = req.query.q;
+  if (!query) return res.json([]);
+
+  const q = "SELECT id, name, profilePic FROM users WHERE name LIKE ? LIMIT 10";
+  db.query(q, [`%${query}%`], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.json(data);
   });
 };
 

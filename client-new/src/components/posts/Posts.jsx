@@ -12,7 +12,7 @@ const Posts = ({ userId }) => {
     queryKey: ["posts", userId],
     queryFn: () => {
       const url = userId ? `/posts?userId=${userId}` : "/posts";
-      return makeRequest.get(url).then((res) => res.data.posts);
+      return makeRequest.get(url).then((res) => res.data);
     },
   });
 
@@ -22,7 +22,7 @@ const Posts = ({ userId }) => {
         <div className="error-message">
           <p> Something went wrong!</p>
           <p style={{ fontSize: "14px", color: "gray" }}>
-            {error.response?.data || error.message}
+            {typeof error.response?.data === "object" ? JSON.stringify(error.response.data) : (error.response?.data || error.message)}
           </p>
         </div>
       ) : isLoading ? (

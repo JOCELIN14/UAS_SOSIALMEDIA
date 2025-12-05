@@ -62,12 +62,11 @@ const Register = () => {
     <div className="register">
       <div className="card">
         <div className="left">
-          <h1>Sosial UAS FrontEnd</h1>
+          <h1>Social Media App</h1>
           <p>
-            Berikut merupakan Sosmed yang telah kami buat sebagai tugas akhir di
-            Semester 3 ini. Semoga berkesan
+            Create an account to connect with friends and the world around you on Social Media App.
           </p>
-          <span>Sudah punya akun?</span>
+          <span>Do you have an account?</span>
           <Link to="/login">
             <button>Login</button>
           </Link>

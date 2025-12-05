@@ -1,0 +1,14 @@
+{
+    "name": "social-media-app",
+    "version": "1.0.0",
+    "description": "Root script for social media app",
+    "scripts": {
+        "install-all": "npm install && cd client-new && npm install && cd ../api && npm install",
+        "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
+        "start-client": "cd client-new && npm start",
+        "start-server": "cd api && npm start"
+    },
+    "dependencies": {
+        "concurrently": "^8.2.0"
+    }
+}

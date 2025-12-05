@@ -34,8 +34,7 @@ const Login = () => {
         <div className="left">
           <h1> Hello World. </h1>
           <p>
-            Selamat datang di Sosial Uas FrontEnd, silahkan masuk untuk
-            pengalaman lebih lanjut.
+            Welcome to Social Media App. Please login to continue.
           </p>
           <span>Dont you have an account?</span>
           <Link to="/register">
