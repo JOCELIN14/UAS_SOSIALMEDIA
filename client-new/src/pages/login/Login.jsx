@@ -4,8 +4,6 @@ import { AuthContext } from "../../context/authContext";
 import "./login.css";
 
 const Login = () => {
-  const navigate = useNavigate();
-
   const { login } = useContext(AuthContext);
 
   const [inputs, setInputs] = useState({
@@ -14,6 +12,7 @@ const Login = () => {
   });
 
   const [err, setErr] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));

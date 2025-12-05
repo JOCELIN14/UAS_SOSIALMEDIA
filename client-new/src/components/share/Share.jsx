@@ -1,69 +1,54 @@
 import "./share.css";
-import Image from "../../assets/img.png";
-import Map from "../../assets/map.png";
-import Friend from "../../assets/friend.png";
+import Image from "@mui/icons-material/Image";
+import Map from "@mui/icons-material/Map";
+import Friend from "@mui/icons-material/EmojiEmotions";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
+
 const Share = () => {
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
 
-  const upload = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await makeRequest.post("/upload", formData);
-      return res.data;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const { currentUser } = useContext(AuthContext);
+  const queryClient = useQueryClient(); // Get dari provider
 
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation(
-    (newPost) => {
+  const mutation = useMutation({
+    mutationFn: (newPost) => {
       return makeRequest.post("/posts", newPost);
     },
-    {
-      onSuccess: () => {
-        // Invalidate and refetch
-        queryClient.invalidateQueries(["posts"]);
-      },
-    }
-  );
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      setDesc("");
+      setFile(null);
+    },
+    onError: (error) => {
+      console.error("Failed to create post:", error);
+      alert("Failed to create post. Please try again.");
+    },
+  });
 
   const handleClick = async (e) => {
     e.preventDefault();
-    let imgUrl = "";
-    if (file) imgUrl = await upload();
-    mutation.mutate({ desc, img: imgUrl });
-    setDesc("");
-    setFile(null);
+    if (!desc.trim()) {
+      alert("Please write something!");
+      return;
+    }
+    mutation.mutate({ desc });
   };
 
   return (
     <div className="share">
       <div className="container">
         <div className="top">
-          <div className="left">
-            <img src={"/upload/" + currentUser.profilePic} alt="" />
-            <input
-              type="text"
-              placeholder={`What's on your mind ${currentUser.name}?`}
-              onChange={(e) => setDesc(e.target.value)}
-              value={desc}
-            />
-          </div>
-          <div className="right">
-            {file && (
-              <img className="file" alt="" src={URL.createObjectURL(file)} />
-            )}
-          </div>
+          <img src={currentUser.profilePic || "/default-avatar.png"} alt="" />
+          <input
+            type="text"
+            placeholder={`What's on your mind ${currentUser.name}?`}
+            onChange={(e) => setDesc(e.target.value)}
+            value={desc}
+          />
         </div>
         <hr />
         <div className="bottom">
@@ -76,21 +61,23 @@ const Share = () => {
             />
             <label htmlFor="file">
               <div className="item">
-                <img src={Image} alt="" />
+                <Image />
                 <span>Add Image</span>
               </div>
             </label>
             <div className="item">
-              <img src={Map} alt="" />
+              <Map />
               <span>Add Place</span>
             </div>
             <div className="item">
-              <img src={Friend} alt="" />
+              <Friend />
               <span>Tag Friends</span>
             </div>
           </div>
           <div className="right">
-            <button onClick={handleClick}>Share</button>
+            <button onClick={handleClick} disabled={mutation.isPending}>
+              {mutation.isPending ? "Sharing..." : "Share"}
+            </button>
           </div>
         </div>
       </div>

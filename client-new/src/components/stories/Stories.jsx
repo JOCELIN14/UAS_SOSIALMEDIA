@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import "./stories.css";
+import "./Stories.css";
 import { AuthContext } from "../../context/authContext";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
@@ -7,11 +7,16 @@ import { makeRequest } from "../../axios";
 const Stories = () => {
   const { currentUser } = useContext(AuthContext);
 
-  const { isLoading, error, data } = useQuery(["stories"], () =>
-    makeRequest.get("/stories").then((res) => {
-      return res.data;
-    })
-  );
+  // BARIS INI TELAH DIREVISI KE SINTAKSIS V5
+  const { isLoading, error, data } = useQuery({
+    // 1. queryKey (wajib)
+    queryKey: ["stories"],
+    // 2. queryFn (wajib)
+    queryFn: () =>
+      makeRequest.get("/stories").then((res) => {
+        return res.data;
+      }),
+  });
 
   //TODO Add story using react-query mutations and use upload function.
 

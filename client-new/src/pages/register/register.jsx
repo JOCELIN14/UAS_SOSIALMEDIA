@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
 import axios from "axios";
 
@@ -10,69 +10,106 @@ const Register = () => {
     password: "",
     name: "",
   });
-  const [err, setErr] = useState(false);
+  const [err, setErr] = useState(null);
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
   const handleClick = async (e) => {
     e.preventDefault();
 
     try {
       await axios.post("http://localhost:5000/api/auth/register", inputs);
+      alert("Registration successful! Please login.");
+      navigate("/login");
     } catch (err) {
-      setErr(err.response.data);
+      console.log("Full error:", err); // Debug
+
+      // Extract error message dengan aman
+      let errorMessage = "Registration failed. Please try again.";
+
+      if (err.response && err.response.data) {
+        const errorData = err.response.data;
+
+        // Kalau error data adalah string
+        if (typeof errorData === "string") {
+          errorMessage = errorData;
+        }
+        // Kalau error data adalah object dengan message
+        else if (errorData.message) {
+          errorMessage = errorData.message;
+        }
+        // Kalau error data adalah object dengan sqlMessage
+        else if (errorData.sqlMessage) {
+          errorMessage = errorData.sqlMessage;
+        }
+        // Kalau duplicate entry
+        else if (errorData.code === "ER_DUP_ENTRY") {
+          errorMessage = "Username or email already exists!";
+        }
+      } else if (err.request) {
+        errorMessage =
+          "Cannot connect to server. Please check if backend is running.";
+      }
+
+      setErr(errorMessage);
     }
   };
 
-  console.log(err);
   return (
     <div className="register">
-      <form className="registerForm">
+      <div className="card">
         <div className="left">
-          <h1> Sosial Uas FrontEnd </h1>
+          <h1>Sosial UAS FrontEnd</h1>
           <p>
-            {" "}
             Berikut merupakan Sosmed yang telah kami buat sebagai tugas akhir di
-            Semester 3 ini. Semoga berkesan{" "}
+            Semester 3 ini. Semoga berkesan
           </p>
-          <span> Sudah punya akun? </span>
+          <span>Sudah punya akun?</span>
           <Link to="/login">
-            <button> Login </button>
+            <button>Login</button>
           </Link>
         </div>
-        <data className="right">
-          <h1> Daftar </h1>
+        <div className="right">
+          <h1>Daftar</h1>
           <form>
             <input
               type="text"
               placeholder="Username"
               name="username"
               onChange={handleChange}
+              required
             />
             <input
               type="email"
               placeholder="Email"
               name="email"
               onChange={handleChange}
+              required
             />
             <input
               type="password"
               placeholder="Password"
               name="password"
               onChange={handleChange}
+              required
             />
             <input
               type="text"
               placeholder="Nama Lengkap"
               name="name"
               onChange={handleChange}
+              required
             />
-            {err && err}
-            <button onClick={handleClick}> Register </button>
+            {err && <span className="error">{String(err)}</span>}
+            <button onClick={handleClick}>Register</button>
           </form>
-        </data>
-      </form>
+        </div>
+      </div>
     </div>
   );
 };
+
 export default Register;
