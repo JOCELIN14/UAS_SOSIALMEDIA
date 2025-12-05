@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Giofani%20Catalina/UAS_SOSIALMEDIA/client-new/app/page.tsx"],"sourcesContent":["import Link from \"next/link\";\r\n\r\nexport default function Home() {\r\n  return (\r\n    <div style={{ padding: \"40px\", textAlign: \"center\", fontFamily: \"sans-serif\" }}>\r\n      <h1>Welcome to Social Media App</h1>\r\n      \r\n      <div style={{ marginTop: \"20px\" }}>\r\n        <Link href=\"/search\">\r\n          <button style={{\r\n            padding: \"10px 20px\",\r\n            backgroundColor: \"#0070f3\",\r\n            color: \"white\",\r\n            border: \"none\",\r\n            borderRadius: \"5px\",\r\n            cursor: \"pointer\",\r\n            fontSize: \"16px\"\r\n          }}>\r\n            Go to Search Page 🔍\r\n          </button>\r\n        </Link>\r\n      </div>\r\n    </div>\r\n  );\r\n}"],"names":[],"mappings":";;;;;AAAA;;;AAEe,SAAS;IACtB,qBACE,kRAAC;QAAI,OAAO;YAAE,SAAS;YAAQ,WAAW;YAAU,YAAY;QAAa;;0BAC3E,kRAAC;0BAAG;;;;;;0BAEJ,kRAAC;gBAAI,OAAO;oBAAE,WAAW;gBAAO;0BAC9B,cAAA,kRAAC,8NAAI;oBAAC,MAAK;8BACT,cAAA,kRAAC;wBAAO,OAAO;4BACb,SAAS;4BACT,iBAAiB;4BACjB,OAAO;4BACP,QAAQ;4BACR,cAAc;4BACd,QAAQ;4BACR,UAAU;wBACZ;kCAAG;;;;;;;;;;;;;;;;;;;;;;AAOb"}}]
+}
