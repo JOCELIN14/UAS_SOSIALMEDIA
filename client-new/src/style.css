@@ -1,0 +1,41 @@
+/* CSS Hasil Kompilasi */
+
+body {
+  padding: 10px;
+}
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+}
+
+/* THEME LIGHT */
+.theme-light body {
+  background-color: white;
+  color: #000;
+}
+
+/* THEME DARK */
+.theme-dark body {
+  background-color: #222;
+  color: whitesmoke;
+}
+
+/* NAV */
+@media (max-width: 960px) {
+  nav {
+    display: none;
+  }
+}
+
+/* THEME LIGHT */
+.theme-light nav {
+  background-color: #f6f3f3;
+  border-bottom: 1px solid lightgray;
+}
+
+/* THEME DARK */
+.theme-dark nav {
+  background-color: #333;
+  border-bottom: 1px solid #444;
+}
