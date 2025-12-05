@@ -23,19 +23,7 @@ export const getUser = (req, res) => {
   });
 };
 
-// --- ADDED SEARCH FUNCTION ---
-export const searchUsers = (req, res) => {
-  const query = req.query.q; 
-  if (!query) return res.status(400).json("Search query is required");
 
-  // This SQL searches for users where the username contains the query text
-  const q = "SELECT id, username, email, profilePic FROM users WHERE username LIKE ?";
-  
-  db.query(q, [`%${query}%`], (err, data) => {
-    if (err) return res.status(500).json(err);
-    return res.status(200).json(data);
-  });
-};
 
 // --- INI FUNGSI UPDATE YANG SUDAH DI-UPGRADE ---
 export const updateUser = (req, res) => {

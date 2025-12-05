@@ -1,18 +1,56 @@
-import express from "express";
-<<<<<<< HEAD
-import { getRelationships, addRelationship, deleteRelationship } from "../controllers/relationships.js";
-=======
-import { getRelationships, addRelationship, deleteRelationship } from "../controllers/relationship.js";
->>>>>>> 2bee9c484676cc5176bfe10195212fc3b8ed3615
+import { db } from "../db.js";
+import jwt from "jsonwebtoken";
 
-const router = express.Router();
+export const getRelationships = (req, res) => {
+    const q = req.query.followerUserId
+        ? "SELECT followedUserId FROM relationships WHERE followerUserId = ?"
+        : "SELECT followerUserId FROM relationships WHERE followedUserId = ?";
 
-router.get("/", getRelationships);
-router.post("/", addRelationship);
-router.delete("/", deleteRelationship);
+    const userId = req.query.followerUserId || req.query.followedUserId;
 
-<<<<<<< HEAD
-export default router;
-=======
-export default router;
->>>>>>> 2bee9c484676cc5176bfe10195212fc3b8ed3615
+    db.query(q, [userId], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json(data.map((relationship) => relationship.followedUserId || relationship.followerUserId));
+    });
+};
+
+export const addRelationship = (req, res) => {
+    const token = req.cookies.accessToken;
+    if (!token) {
+        console.log("AddRelationship: No token found");
+        return res.status(401).json("Not logged in!");
+    }
+
+    jwt.verify(token, "secretkey", (err, userInfo) => {
+        if (err) {
+            console.log("AddRelationship: Token invalid", err);
+            return res.status(403).json("Token is not valid!");
+        }
+
+        console.log("AddRelationship: User:", userInfo.id, "Follows:", req.body.userId);
+
+        const q = "INSERT INTO relationships (`followerUserId`,`followedUserId`) VALUES (?)";
+        const values = [userInfo.id, req.body.userId];
+
+        db.query(q, [values], (err, data) => {
+            if (err) return res.status(500).json(err);
+            return res.status(200).json("Following");
+        });
+    });
+};
+
+export const deleteRelationship = (req, res) => {
+    const token = req.cookies.accessToken;
+    if (!token) return res.status(401).json("Not logged in!");
+
+    jwt.verify(token, "secretkey", (err, userInfo) => {
+        if (err) return res.status(403).json("Token is not valid!");
+
+        const q = "DELETE FROM relationships WHERE `followerUserId` = ? AND `followedUserId` = ?";
+
+        db.query(q, [userInfo.id, req.query.userId], (err, data) => {
+            if (err) return res.status(500).json(err);
+            return res.status(200).json("Unfollowed");
+        });
+    });
+};

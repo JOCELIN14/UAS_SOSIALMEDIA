@@ -16,9 +16,14 @@ const RightBar = () => {
   // State for dismissed users
   const [dismissed, setDismissed] = useState([]);
 
-  // Filter suggestions: exclude current user AND dismissed users
+  // Filter suggestions: exclude current user, dismissed users, AND already followed users
   const suggestions = users
-    ? users.filter(u => u.id !== currentUser.id && !dismissed.includes(u.id))
+    ? users.filter(
+      (u) =>
+        u.id !== currentUser.id &&
+        !dismissed.includes(u.id) &&
+        (!relationshipData || !relationshipData.includes(u.id))
+    )
     : [];
 
   const handleDismiss = (userId) => {
