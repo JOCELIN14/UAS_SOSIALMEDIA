@@ -1,8 +1,15 @@
 import express from "express";
-import { getUsers } from "../controllers/users.js";
+import { getUser, updateUser, deleteUser } from "../controllers/users.js";
 
 const router = express.Router();
 
-router.get("/", getUsers);
+// Jalur untuk mencari user berdasarkan ID (dipakai Frontend di baris 27)
+router.get("/find/:userId", getUser);
+
+// Jalur untuk update profile
+router.put("/", updateUser);
+
+// Jalur untuk hapus akun (dipakai tombol Delete kita tadi)
+router.delete("/", deleteUser);
 
 export default router;
